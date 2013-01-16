@@ -24,6 +24,10 @@ Shindo.tests('test_helper', 'meta') do
         formats_kernel({:a => :b, :b => :c}, {:a => Symbol}, true, false)
       end
 
+      test('when format expects nil which is provided') do
+        formats_kernel({:a => nil}, {:a => NilClass})
+      end
+
     end
 
     tests('returns false') do
@@ -38,6 +42,14 @@ Shindo.tests('test_helper', 'meta') do
 
       test('when some keys do not appear') do
         !formats_kernel({}, {:a => String})
+      end
+
+      test('when value is should be required and nil but key does not appear') do
+        !formats_kernel({}, {:a => NilClass})
+      end
+
+      test('when value is nullable but key does not appear') do
+        !formats_kernel({}, {:a => Fog::Nullable::String})
       end
 
       test('when an array is expected but another data type is found') do
